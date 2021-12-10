@@ -1,0 +1,91 @@
+
+************************************
+    findoffset, version 1.9
+************************************
+0) GGM
+1) White
+Data format: MJD, Observations, Model
+Filename              : ./dummy2_1.mom
+Number of observations: 3095
+Percentage of gaps    : 14.73
+
+----------------
+  AmmarGrag
+----------------
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+beta_size: 10
+beta_spacing: 8.5
+Penalty in BIC_c for each parameter: 8
+
+Number of CPU's used (threads) = 8
+
+icount=22, z=6.423801e-03
+icount=40, z=3.399431e-05
+icount=60, z=1.152807e-08
+icount=79, z=1.229769e-08
+icount=97, z=4.980314e-12
+icount=115, z=5.370309e-14
+icount=133, z=1.817561e-17
+  137    0.00000     0.35398 
+  Return code IFAULT = 0
+
+  Estimate of minimizing value X*:
+  F(X*) = 7650
+
+  Number of iterations = 137
+  Number of restarts =   0
+Cannot compute Fisher matrix: out of range
+
+Likelihood value
+--------------------
+min log(L)=-7650.076
+k         =7 + 2 + 1 = 10
+AIC       =15320.151
+BIC       =15378.933
+BIC_tp    =15360.554
+BIC_c     =15408.914
+ln_det_I  =18.712
+
+Noise models
+------------
+GGM:
+fraction  = 1.00000
+sigma     = 12.45630 mm/yr^0.17699
+d         =   0.3540 +/- 0.0000
+kappa     =  -0.7080 +/- 0.0000
+1-phi     = 6.900000e-06 (fixed)
+
+White:
+fraction  = 0.00000
+sigma     = 0.00000 mm
+No noise parameters to show
+
+STD of the driving noise: 4.38360
+bias : 22.068 +/- 1.880 mm (at 2011/9/11, 0:0:0.000)
+trend: 1.901 +/- 0.416 mm/year
+cos yearly : 0.457 +/- 0.501 mm
+sin yearly : -3.361 +/- 0.510 mm
+Amp yearly : 3.430 +/- 0.503 mm
+Pha yearly : -82.260 degrees
+cos hyearly : 0.317 +/- 0.392 mm
+sin hyearly : 0.290 +/- 0.395 mm
+Amp hyearly : 0.630 +/- 0.311 mm
+Pha hyearly : 42.451 degrees
+offset at 55179.0000 :   -6.35 +/-  1.73 mm
+--> output.mom
+Total computing time: 44.00000 sec
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+beta_size: 10.00000
+beta_spacing: 8.50000
+Penalty in BIC_c for each parameter: 8.00000
+
+Number of CPU's used (threads) = 8
+
+lambda=0.99690
+i=, t=55179.00000
+FindOffset i_min =909
+FindOffset MJD   =55177.00000
+FindOffset BIC_c =15409.17331
+Total computing time: 29.00000 sec

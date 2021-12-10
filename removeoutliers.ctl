@@ -1,0 +1,10 @@
+DataFile            dummy_raw.mom
+DataDirectory       ./
+interpolate         no
+OutputFile          dummy2_0.mom
+seasonalsignal      yes
+halfseasonalsignal  yes
+estimateoffsets     yes
+ScaleFactor         1.0
+PhysicalUnit        mm
+IQ_factor           3

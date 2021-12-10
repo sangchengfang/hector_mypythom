@@ -22,7 +22,7 @@
 #  along with Hector.  If not, see <http://www.gnu.org/licenses/>
 #
 # 29/3/2020 Machiel Bos, Santa Clara
-#===============================================================================
+# ===============================================================================
 
 import sys
 import math
@@ -32,14 +32,14 @@ import glob
 import json
 import subprocess
 
-#===============================================================================
+# ===============================================================================
 # Subroutines
-#===============================================================================
+# ===============================================================================
 
 # Compute year, month and day from MJD
-#---------------
+# ---------------
 def caldat(mjd):
-#---------------
+# ---------------
     """ Compute calendar date for given julian date.
     * 
     * Example: YEAR = 1970, MONTH = 1, DAY = 1, JD = 2440588. 
@@ -64,21 +64,21 @@ def caldat(mjd):
     month = j;
     day   = k;
 
-    return [year,month,day]
+    return [year, month,day]
 
 
 
 # Make plot of Power-Spectrum
-#-----------------------
+# -----------------------
 def make_PSD_plot(name):
-#-----------------------
+# -----------------------
     """ Make a power spectral density plot from the residuals 
     
     Arguments:
         name = name of station and filename without .mom extension
     """
 
-    #--- create new gnuplot script file
+    # --- create new gnuplot script file
     fp = open("plot_spectra.gpl", "w")
     fp.write("set terminal postscript enhanced size 4,4 color portrait" + \
                                                       " solid \"Helvetica\"\n")
@@ -107,31 +107,27 @@ def make_PSD_plot(name):
     fp.write(" 'modelspectrum_percentiles.out' u ($1*s):($4/s) w l ls 3\n")
     fp.close()
 
-    #--- Call gnuplot
+    # --- Call gnuplot
     try:
-        subprocess.call(['gnuplot','plot_spectra.gpl'])
+        subprocess.call(['gnuplot', 'plot_spectra.gpl'])
     except OSError:
         print('Something seems to have gone wrong with the powerspectrum plot')
-    os.system('gmt psconvert -Te -A0.1 ./psd_figures/{0:s}_psd.ps'.\
-								format(name))
-    os.system('convert -density 300 -flatten -antialias ' +  \
-		'./psd_figures/{0:s}_psd.eps ./psd_figures/{0:s}.png\n'.\
-								  format(name))
+    os.system('gmt psconvert -Te -A0.1 ./psd_figures/{0:s}_psd.ps'.format(name))
+    os.system('convert -density 300 -flatten -antialias ./psd_figures/{0:s}_psd.eps ./psd_figures/{0:s}.png\n'.format(name))
 
 
 
-#------------------------
+# ------------------------
 def make_data_plot(name):
-#------------------------
+# ------------------------
     """ Make a time series plot
 
     Parameters:
         name : station name
     """  
-    #--- create new gnuplot script file
+    # --- create new gnuplot script file
     fp = open("plot_data.gpl", "w")
-    fp.write("set terminal postscript enhanced size 8,4.8 color portrait" + \
-                                                        " solid 'Helvetica'\n")
+    fp.write("set terminal postscript enhanced size 8,4.8 color portrait solid 'Helvetica'\n")
     fp.write("set output './data_figures/{0:s}_data.ps'\n".format(name))
     fp.write("set border 3;\n")
     fp.write("set xlabel 'Years' font 'Helvetica, 18';\n")
@@ -148,56 +144,49 @@ def make_data_plot(name):
     fp.write("set style line 1 lt 1 lw 3 pt 7 linecolor rgb '#a6cee3'\n")
     fp.write("set style line 2 lt 1 lw 3 pt 7 linecolor rgb 'red'\n")
     fp.write("set style line 3 lt 1 lw 3 pt 2 linecolor rgb 'black'\n")
-    fp.write("plot './mom_files/{0:s}.mom' u".format(name) + \
-                                " (($1-51544)/365.25+2000):2 w p ls 1,\\\n")
-    fp.write("     './mom_files/{0:s}.mom' u".format(name) + \
-                                " (($1-51544)/365.25+2000):3 w l ls 2")
+    fp.write("plot './mom_files/{0:s}.mom' u".format(name) + " (($1-51544)/365.25+2000):2 w p ls 1,\\\n")
+    fp.write("     './mom_files/{0:s}.mom' u".format(name) + " (($1-51544)/365.25+2000):3 w l ls 2")
     fp.write("\n")
 
-    #---- A plot of the residuals is also nice to have
+    # ---- A plot of the residuals is also nice to have
     fp.write("\nset output './data_figures/{0:s}_res.eps'\n".format(name))
-    fp.write("plot './mom_files/{0:s}.mom' u ".format(name) + \
-                                " (($1-51544)/365.25+2000):($2-$3) w l ls 2\n")
+    fp.write("plot './mom_files/{0:s}.mom' u ".format(name) + " (($1-51544)/365.25+2000):($2-$3) w l ls 2\n")
     fp.close()
 
-    #--- Call gnuplot
+    # --- Call gnuplot
     os.system('gnuplot plot_data.gpl')
-   
-    os.system('gmt psconvert -Te -A0.1 ./data_figures/{0:s}_data.ps'.\
-								format(name))
-    os.system('convert -density 300 -flatten -antialias ' +  \
-	'./data_figures/{0:s}_data.eps ./data_figures/{0:s}.png\n'.\
-								format(name))
- 
 
-#===============================================================================
+    os.system('gmt psconvert -Te -A0.1 ./data_figures/{0:s}_data.ps'.format(name))
+    os.system('convert -density 300 -flatten -antialias ./data_figures/{0:s}_data.eps ./data_figures/{0:s}.png\n'.format(name))
+
+
+# ===============================================================================
 # Main program
-#===============================================================================
+# ===============================================================================
 
-#--- Read command line arguments
+# --- Read command line arguments
 if len(sys.argv)==2:
     noisemodel = sys.argv[1]
-    stations   = []
+    stations = []
 elif len(sys.argv)==3:
     noisemodel = sys.argv[1]
-    stations   = [sys.argv[2]]
+    stations = [sys.argv[2]]
 else:
-    print('Correct usage: analyse_and_plot.py station_name ' + \
-                        '{fGGM|GGM|MT|PL|FN|RW|WN|AR1|VA}+ [fraction]')
+    print('Correct usage: analyse_and_plot.py station_name {fGGM|GGM|MT|PL|FN|RW|WN|AR1|VA}+ [fraction]')
     print('Example: analyse_and_plot.py PLWN')
     sys.exit()
     
 
-#--- Read station names in directory ./obs_files
+# --- Read station names in directory ./obs_files
 if len(stations)==0:
     fnames = glob.glob("./obs_files/*.mom")
     
-    #--- Did we find files?
+    # --- Did we find files?
     if len(fnames)==0:
         print('Could not find any mom-file in ./obs_files')
         sys.exit()
 
-    #--- Extract station names
+    # --- Extract station names
     for fname in sorted(fnames):
         m = re.search('/(\w+)\.mom',fname)
         if m:
@@ -208,19 +197,19 @@ if len(stations)==0:
             sys.exit()
 
 
-#-- Open new JSON file to store all other JSON results
-fp_json_est = open('hector_estimatetrend.json','w')
+# --- Open new JSON file to store all other JSON results
+fp_json_est = open('hector_estimatetrend.json', 'w')
 fp_json_est.write('{')
-fp_json_rem = open('hector_removeoutliers.json','w')
+fp_json_rem = open('hector_removeoutliers.json', 'w')
 fp_json_rem.write('{')
 
-#--- Store outliers in dictionary
+# --- Store outliers in dictionary
 outliers = {}
 
-#--- Analyse station
+# --- Analyse station
 for station in stations:
 
-    #--- Get sampling period
+    # --- Get sampling period
     try:
         fp_mom = open("./obs_files/{0:s}.mom".format(station))
     except IOError:
@@ -228,17 +217,16 @@ for station in stations:
         sys.exit()
 
     lines = fp_mom.readlines()
-    m = re.search('# sampling period (\d+\.?\d*)',lines[0])
+    m = re.search('# sampling period (\d+\.?\d*)', lines[0])
     if m:
         sampling_period = float(m.group(1))
         fs = 1.0/float(m.group(1))
         T = 1.0/(365.25*fs)
     else:
-        print("./obs_files/{0:s}.mom does not have # sampling period!". \
-								format(station))
+        print("./obs_files/{0:s}.mom does not have # sampling period!".format(station))
         sys.exit()
 
-    #--- Get first and last observation epoch
+    # --- Get first and last observation epoch
     i =0
     n = len(lines)
     while lines[i].startswith('#')==True and i<n:
@@ -247,34 +235,34 @@ for station in stations:
     mjd0 = float(cols[0])
     cols = lines[n-1].split()  
     mjd1 = float(cols[0])
-    n    = int((mjd1-mjd0)/sampling_period + 1.0e-6)
-    print(mjd0,mjd1,sampling_period,n)
+    n = int((mjd1-mjd0)/sampling_period + 1.0e-6)
+    print(mjd0, mjd1, sampling_period, n)
 
-    #--- Get 4 letter marker and component
-    m = re.search('(\w+)_(\d)',station)
+    # --- Get 4 letter marker and component
+    m = re.search('(\w+)_(\d)', station)
     if m:
-        marker    = m.group(1)
+        marker = m.group(1)
         component = m.group(2)
     else:
-        marker    = station
+        marker = station
         component = None
 
-    param = '{0:s} {1:s}'.format(station,noisemodel)
+    param = '{0:s} {1:s}'.format(station, noisemodel)
     print('#### {0:s}'.format(param))
     os.system('analyse_timeseries.py {0:s}'.format(param))
-    fp_dummy = open('estimatetrend.json','r')
+    fp_dummy = open('estimatetrend.json', 'r')
     results = json.load(fp_dummy)
     fp_dummy.close()
- 
-    #--- Does the data_figures directory exists?
+
+    # --- Does the data_figures directory exists?
     if not os.path.exists('./data_figures'):
         os.mkdir('./data_figures')
 
-    #--- Does the psd_figures directory exists?
+    # --- Does the psd_figures directory exists?
     if not os.path.exists('./psd_figures'):
         os.mkdir('./psd_figures')
 
-    #--- Create control file to estimate power spectrum of residuals
+    # --- Create control file to estimate power spectrum of residuals
     fp = open("estimatespectrum.ctl", "w")
     fp.write("DataFile            {0:s}.mom\n".format(station))
     fp.write("DataDirectory       ./mom_files\n")
@@ -285,37 +273,37 @@ for station in stations:
     fp.write("WindowFunction      Hann\n")
     fp.close()
 
-    #--- Run estimatespectrum
-    output = subprocess.check_output('estimatespectrum 4',shell=True) 
+    # --- Run estimatespectrum
+    output = subprocess.check_output('estimatespectrum 4', shell=True)
     estimatespectrum_cols = output.decode().split()
     freq0 = estimatespectrum_cols[-5]
     freq1 = estimatespectrum_cols[-3]
 
-    #--- Read estimatetrend.ctl for details about GGM_1mphi, lamba_fixed,
+    # --- Read estimatetrend.ctl for details about GGM_1mphi, lamba_fixed,
     #    phi_fixed.
     GGM_1mphi_needed = True
     lambda_needed = True
     kappa_needed = True
-    with open('estimatetrend.ctl','r') as fp:
+    with open('estimatetrend.ctl', 'r') as fp:
         for line in fp:
-            m = re.match('GGM_1mphi',line)
+            m = re.match('GGM_1mphi', line)
             if m:
                 GGM_1mphi_needed = False
                 cols = line.split()
                 GGM_1mphi = float(cols[1])
-            m = re.match('kappa_fixed',line)
+            m = re.match('kappa_fixed', line)
             if m:
                 kappa_needed = False
                 cols = line.split()
                 kappa_fixed = float(cols[1])
-            m = re.match('lambda_fixed',line)
+            m = re.match('lambda_fixed', line)
             if m:
                 lambda_needed = False
                 cols = line.split()
                 lambda_fixed = float(cols[1])
 
-    #--- Create control file for modelspectrum
-    fp = open("modelspectrum.ctl","w")
+    # --- Create control file for modelspectrum
+    fp = open("modelspectrum.ctl", "w")
     fp.write("DataFile                {0:s}.mom\n".format(station))
     fp.write("DataDirectory           ./mom_files\n")
     fp.write("ScaleFactor             1.0\n")
@@ -344,19 +332,19 @@ for station in stations:
     fp.write("WindowFunction          Hann\n")
     fp.close()
 
-    #--- Create input for modelspectrum
-    fp = open("modelspectrum.txt","w")
+    # --- Create input for modelspectrum
+    fp = open("modelspectrum.txt", "w")
     sigma = results['driving_noise']
-    fp.write("{0:f}\n{1:f}\n".format(sigma,24.0/fs))
-    #--- Select NoiseModel section from json structure
+    fp.write("{0:f}\n{1:f}\n".format(sigma, 24.0/fs))
+    # --- Select NoiseModel section from json structure
     noises = results['NoiseModel']
 
-    #--- First, enter all the fractions
+    # --- First, enter all the fractions
     for model in noises.keys():
         noise = noises[model]
         fp.write("{0:f}\n".format(noise['fraction']))
 
-    #--- Secondly, enter specific noise parameters
+    # --- Secondly, enter specific noise parameters
     #    Nothing to add for White, FlickerGGM or RandomWalkGGM
     for model in noises.keys():
         noise = noises[model]
@@ -384,40 +372,39 @@ for station in stations:
             phi = noise['AR'][0]
             fp.write('{0:f}\n'.format(phi))
 
-    #--- Finally, write information about lowest and highest frequency
-    fp.write("2\n{0:s} {1:s}\n".format(freq0,freq1))
+    # --- Finally, write information about lowest and highest frequency
+    fp.write("2\n{0:s} {1:s}\n".format(freq0, freq1))
     fp.close()
 
-    #--- Make modelled psd line
+    # --- Make modelled psd line
     os.system('modelspectrum < modelspectrum.txt > /dev/null')
 
-    #--- Make plot of power-spectrum and data
+    # --- Make plot of power-spectrum and data
     make_PSD_plot(station)
 
-    #--- Make time series plot
+    # --- Make time series plot
     make_data_plot(station)
 
-    #--- update json file
+    # --- update json file
     if station!=stations[0]:
         fp_json_est.write(',')
         fp_json_rem.write(',')
     fp_json_est.write('\n  "{0:s}" : {{\n'.format(station))
     fp_json_rem.write('\n  "{0:s}" : {{\n'.format(station))
-    fp_dummy = open('estimatetrend.json','r')
+    fp_dummy = open('estimatetrend.json', 'r')
     lines = fp_dummy.readlines()
     fp_dummy.close()
     for i in range(1,len(lines)-1):
         fp_json_est.write('  ' + lines[i])
     fp_json_est.write('  ' + lines[-1].rstrip("\n"))
-    fp_dummy = open('removeoutliers.json','r')
+    fp_dummy = open('removeoutliers.json', 'r')
     lines = fp_dummy.readlines()
     fp_dummy.close()
-    for i in range(1,len(lines)-1):
+    for i in range(1, len(lines)-1):
         fp_json_rem.write('  ' + lines[i])
     fp_json_rem.write('  ' + lines[-1].rstrip("\n"))
 
-
-fp_json_est.write('\n}\n')        
+fp_json_est.write('\n}\n')
 fp_json_est.close()
 fp_json_rem.write('\n}\n')        
 fp_json_rem.close()

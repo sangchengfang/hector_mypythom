@@ -1,0 +1,37 @@
+{
+  "N" : 3095,
+  "gap_percentage" : 14.7334,
+  "ln_L" : -7650.08,
+  "AIC" : 15320.2,
+  "BIC" : 15378.9,
+  "BIC_tp" : 15360.6,
+  "BIC_c" : 15408.9,
+  "ln_det_I" : 18.7115,
+  "NoiseModel" : {
+    "GGM" : {
+      "sigma" : 12.4563,
+      "d" : 0.353984,
+      "kappa" : -0.707969,
+      "1-phi" : 6.9e-06,
+      "fraction" : 1
+    },
+    "White" : {
+      "sigma" : 1.11243e-06,
+      "fraction" : 6.44001e-14
+    }
+  },
+  "driving_noise" : 4.3836,
+  "trend" : 1.90059,
+  "trend_sigma" : 0.415591,
+  "Sa_cos" : 0.456865,
+  "Sa_cos_sigma" : 0.500628,
+  "Sa_sin" : -3.3613,
+  "Sa_sin_sigma" : 0.510327,
+  "Ssa_cos" : 0.316616,
+  "Ssa_cos_sigma" : 0.391747,
+  "Ssa_sin" : 0.289629,
+  "Ssa_sin_sigma" : 0.39466,
+  "jumps_epochs" : ["2009-12-14T00:00:00.000Z"],
+  "jumps_sizes" : [-6.34883],
+  "jumps_sigmas" : [1.73096]
+}

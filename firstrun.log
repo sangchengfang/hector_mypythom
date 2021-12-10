@@ -1,0 +1,88 @@
+
+**************************************
+    removeoutliers, version 1.9
+**************************************
+Data format: MJD, Observations, Model
+Filename              : ./dummy_raw.mom
+Number of observations: 3213
+Percentage of gaps    : 10.3
+after removal gaps, m=2882
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+Found 123 bad points.
+after removal gaps, m=2759
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+Found 26 bad points.
+after removal gaps, m=2733
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+Found 0 bad points.
+--> dummy0_0.mom
+
+**************************************
+    removeoutliers, version 1.9
+**************************************
+Data format: MJD, Observations, Model
+Filename              : ./dummy_raw.mom
+Number of observations: 3213
+Percentage of gaps    : 10.3
+after removal gaps, m=2882
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+Found 77 bad points.
+after removal gaps, m=2805
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+Found 62 bad points.
+after removal gaps, m=2743
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+Found 33 bad points.
+after removal gaps, m=2710
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+Found 14 bad points.
+after removal gaps, m=2696
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+Found 3 bad points.
+after removal gaps, m=2693
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+Found 0 bad points.
+--> dummy1_0.mom
+
+**************************************
+    removeoutliers, version 1.9
+**************************************
+Data format: MJD, Observations, Model
+Filename              : ./dummy_raw.mom
+Number of observations: 3213
+Percentage of gaps    : 10.3
+after removal gaps, m=2882
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+Found 64 bad points.
+after removal gaps, m=2818
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+Found 2 bad points.
+after removal gaps, m=2816
+No Polynomial degree set, using offset + linear trend
+No extra periodic signal is included.
+Found 0 bad points.
+--> dummy2_0.mom
+MJD=55586.000000, trend=19.367000, BIC_c=8329.815000
+MJD=55179.000000, trend=17.581000, BIC_c=9265.964000
+MJD=55213.000000, trend=0.955000, BIC_c=15405.836000
+For first round (no new offsets added) BIC_c: 33001.615000
+--> mjd=55179.000000,  value=33024.845338
+MJD=55586.000000, trend=19.325000, BIC_c=8347.154000
+MJD=55188.000000, trend=18.115000, BIC_c=9261.724000
+MJD=55177.000000, trend=1.901000, BIC_c=15408.914000
+For offsets 1 BIC_c: 33017.792000
+--> mjd=55177.000000,  value=33032.004382
+0 MJD=       0.0 BIC_c=  33001.62
+1 MJD=   55179.0 BIC_c=  33017.79
+Computation time in seconds: 424.169164

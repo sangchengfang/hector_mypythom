@@ -3,40 +3,26 @@
 # For given mom-filename and noise model combination, analyse the time series.
 #
 #  This script is part of Hector 1.9
-#
-#  Hector is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 3 of the License, or
-#  any later version.
-#
-#  Hector is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with Hector.  If not, see <http://www.gnu.org/licenses/>
-#===============================================================================
+# ===============================================================================
 
 import sys
 import os
 import re
 
-#===============================================================================
+# ===============================================================================
 # Subroutines
-#===============================================================================
+# ===============================================================================
 
 
-#-------------------------------------------
+# -------------------------------------------
 def create_removeoutliers_ctl_file(station):
-#-------------------------------------------
-    """ Create ctl file for removeoutlier.
-
-    Args:
-        station : station name (including _0, _1 or _2) of the mom-file
+    """
+    Create ctl file for removeoutlier.
+    :param station: station name (including _0, _1 or _2) of the mom-file
+    :return:
     """
 
-    #--- Create control.txt file for removeoutliers
+    # --- Create control.txt file for removeoutliers
     fp = open("removeoutliers.ctl", "w")
     fp.write("DataFile            {0:s}.mom\n".format(station))
     fp.write("DataDirectory         ./obs_files\n")
@@ -55,16 +41,15 @@ def create_removeoutliers_ctl_file(station):
 
 
 
-#-------------------------------------
+# -------------------------------------
 def parse_noisemodels(noisemodel_abr):
-#-------------------------------------
-    """ Convert string of abbreviations into list of noise models
-
-    Args:
-        noisemodel_str (string) : noisemodels written as one string
+    """
+    Convert string of abbreviations into list of noise models
+    :param noisemodel_abr: noisemodels written as one string
+    :return:
     """
 
-    abbreviations = ['fGGM','MT','GGM','PL','FN','WN','RW','AR1','VA','VSA']
+    abbreviations = ['fGGM', 'MT', 'GGM', 'PL', 'FN', 'WN', 'RW', 'AR1', 'VA', 'VSA']
 
     i0=0
     i1=2
@@ -92,7 +77,7 @@ def parse_noisemodels(noisemodel_abr):
             i0 = i1
             i1 += 2
          
-    #--- Sanity check
+    # --- Sanity check
     if ('GGM' in noisemodels) and ('PL' in noisemodels or 'FN' in noisemodels \
 						       or 'RW' in noisemodels): 
         print('Cannot have GGM and one of the PL|FN|RW noise models')
@@ -102,9 +87,9 @@ def parse_noisemodels(noisemodel_abr):
 
 
  
-#-------------------------------------------------------
-def create_estimatetrend_ctl_file (station,noisemodels):
-#-------------------------------------------------------
+# -------------------------------------------------------
+def create_estimatetrend_ctl_file (station, noisemodels):
+# -------------------------------------------------------
     """ Create ctl file for findoffset.
 
     Args:
@@ -112,7 +97,7 @@ def create_estimatetrend_ctl_file (station,noisemodels):
         noisemodels (list): ['GGM','PL','WN',...]
     """
 
-    #--- Create control.txt file for EstimateTrend
+    # --- Create control.txt file for EstimateTrend
     fp = open("estimatetrend.ctl", "w")
     fp.write("DataFile              {0:s}.mom\n".format(station))
     fp.write("DataDirectory         ./pre_files\n")
@@ -125,7 +110,7 @@ def create_estimatetrend_ctl_file (station,noisemodels):
     need_1mphi = False
     need_varying_phi = False
     for noisemodel in noisemodels:
-        if noisemodel=='WN':
+        if noisemodel == 'WN':
             names += ' White'
         elif noisemodel == 'GGM' or noisemodel == 'fGGM':
             names += ' GGM'
@@ -171,41 +156,39 @@ def create_estimatetrend_ctl_file (station,noisemodels):
     fp.close()
 
 
-
-#===============================================================================
+# ===============================================================================
 # Main program
-#===============================================================================
+# ===============================================================================
 
 
-#--- Read command line arguments
-if not len(sys.argv)==3:
-    print('Correct usage: analyse_timeseries.py station_name ' + \
-			'{GGM|MT|PL|FN|RW|WN|AR1|VA|VSA}+')
+# --- Read command line arguments
+if not len(sys.argv) == 3:
+    print('Correct usage: analyse_timeseries.py station_name {GGM|MT|PL|FN|RW|WN|AR1|VA|VSA}+')
     print('Example: analyse_timeseries.py station_name PLWN')
     sys.exit()
 else:
-    station        = sys.argv[1]
+    station = sys.argv[1]
     noisemodel_abr = sys.argv[2]
 
-#--- Check if the file exists 
-if os.path.isfile("./obs_files/{0:s}.mom".format(station))==False:
-     print("Cannot find {0:s}.mom file in obs_files directory".format(station))
-     sys.exit()
+# --- Check if the file exists 
+if os.path.isfile("./obs_files/{0:s}.mom".format(station)) == False:
+    print("Cannot find {0:s}.mom file in obs_files directory".format(station))
+    sys.exit()
 
-#--- Does the mom-directory exists?
+# --- Does the mom-directory exists?
 if not os.path.exists('./pre_files'):
-     os.makedirs('./pre_files')
+    os.makedirs('./pre_files')
 
-#--- Does the mom-directory exists?
+# --- Does the mom-directory exists?
 if not os.path.exists('./mom_files'):
-     os.makedirs('./mom_files')
+    os.makedirs('./mom_files')
 
-#--- Remove outliers    
+# --- Remove outliers    
 create_removeoutliers_ctl_file(station)
 os.system("removeoutliers > removeoutliers.out")
 
-#--- Run estimatetrend
+# --- Run estimatetrend
 noisemodels = parse_noisemodels(noisemodel_abr)
-create_estimatetrend_ctl_file(station,noisemodels)
+create_estimatetrend_ctl_file(station, noisemodels)
 os.system("estimatetrend > estimatetrend.out")
 

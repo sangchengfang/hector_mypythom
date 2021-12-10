@@ -30,7 +30,7 @@ fnames = glob.glob("./ori_files/*.tenv3")
 fnames.sort()
 
 # --- Did we find some sol-files?
-if len(fnames)==0:
+if len(fnames) == 0:
     print("Did not found any tenv3-files in the ./ori_files directory")
     sys.exit()
 
@@ -47,7 +47,7 @@ fp_out = list()
 for fname in fnames:
 
     # --- Extract station name
-    m = re.search('/(\w+)\.', fname)
+    m = re.search(r'/(\w+)\.', fname)
     # print(m)
     if m:
         station = m.group(1)
