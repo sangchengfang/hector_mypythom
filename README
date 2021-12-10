@@ -7,7 +7,7 @@ your system, create a symbolic link. apply_WF requires the numpy module.
 analyse_timeseries.py: workhorse script that calls removeoutliers and
 	estimatetrend. Argument is station name + noise model combination.
 
-analyse_and_plot.py: high level script that calls analyse_time series to 
+analyse_and_plot.py: high level script that calls "analyse_timeseries.py" to
 	analyse and plot all time series in the ./obs_files directory. It
 	assumes these are in the mom format. Argument is noise model 
 	combination.
@@ -15,7 +15,7 @@ analyse_and_plot.py: high level script that calls analyse_time series to
 apply_WF.py: computes a varying annual + semi-annual signal for a 
 	time series stored in ./obs_files. Argument is station name +
 	phi (the coefficient of the AR1 noise describing the random part
-	of the seasonal signal). It makes use of analyse_timeseries.py
+	of the seasonal signal). It makes use of analyse_timeseries.py.
 	Estimated seasonal signal is stored in ./sea_files while the
 	signal-seasonal signal (filtered signal) is stored in ./fil_files.
 
